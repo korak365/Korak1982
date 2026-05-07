@@ -1,0 +1,47 @@
+// Import Apify SDK and Crawlee modules
+import { Actor } from 'apify';
+import { CheerioCrawler, Dataset } from 'crawlee';
+
+await Actor.init();
+
+// Extract input values
+const { startUrls = ['https://example.com/company-directory'], softwareKeywords = [], maxRequestsPerCrawl = 50 } = (await Actor.getInput()) ?? {};
+
+const proxyConfiguration = await Actor.createProxyConfiguration();
+
+const crawler = new CheerioCrawler({
+    proxyConfiguration,
+    maxRequestsPerCrawl,
+    async requestHandler({ enqueueLinks, request, $, log }) {
+        log.info(`Processing: ${request.loadedUrl}`);
+
+        const companies = $('.company-item'); // Update HTML selector as appropriate
+
+        const extractedData = companies.map((index, element) => {
+            const companyName = $(element).find('.company-name').text().trim();
+            const website = $(element).find('.company-website a').attr('href');
+            const contactInfo = $(element).find('.contact-info').text().trim();
+
+            const pageContent = $(element).text();
+            const detectedTechnologies = softwareKeywords.filter(keyword => pageContent.includes(keyword));
+
+            return { companyName, website, technologies: detectedTechnologies, contactInfo };
+        }).get();
+
+        // Push extracted data to Dataset
+        for (const data of extractedData) {
+            if (data.technologies.length > 0) {
+                await Dataset.pushData(data);
+            }
+        }
+
+        // Enqueue additional links from pagination
+        await enqueueLinks({
+            selector: '.pagination a', // Replace with actual pagination selector
+        });
+    },
+});
+
+await crawler.run(startUrls);
+
+await Actor.exit();

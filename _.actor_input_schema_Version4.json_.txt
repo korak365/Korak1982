@@ -1,0 +1,35 @@
+{
+    "title": "Input schema for Technographic Lead Gen Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "List of starting URLs for scraping company data.",
+            "editor": "requestListSources",
+            "prefill": [
+                {
+                    "url": "https://example.com/company-directory"
+                }
+            ]
+        },
+        "softwareKeywords": {
+            "title": "Software Keywords",
+            "type": "array",
+            "description": "List of technologies or software keywords to identify.",
+            "editor": "stringArray",
+            "default": [
+                "Salesforce",
+                "HubSpot",
+                "Dynamics 365"
+            ]
+        },
+        "maxRequestsPerCrawl": {
+            "title": "Max Requests per Crawl",
+            "type": "integer",
+            "description": "Limit the number of pages the scraper will visit.",
+            "default": 50
+        }
+    }
+}

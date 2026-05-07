@@ -1,0 +1,53 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "companyName": {
+            "type": "string",
+            "title": "Company Name"
+        },
+        "website": {
+            "type": "string",
+            "title": "Company Website"
+        },
+        "technologies": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "title": "Detected Technologies"
+        },
+        "contactInfo": {
+            "type": "string",
+            "title": "Contact Information"
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["companyName", "website", "technologies", "contactInfo"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "companyName": {
+                        "label": "Company Name",
+                        "format": "text"
+                    },
+                    "website": {
+                        "label": "Website",
+                        "format": "link"
+                    },
+                    "technologies": {
+                        "label": "Technologies",
+                        "format": "array"
+                    },
+                    "contactInfo": {
+                        "label": "Contact Info",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

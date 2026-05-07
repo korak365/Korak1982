@@ -1,0 +1,17 @@
+{
+    "actorSpecification": 1,
+    "name": "technographic-lead-gen-scraper",
+    "title": "Technographic Lead Gen Scraper",
+    "description": "Scrapes websites to find companies using specific high-ticket software like Salesforce or HubSpot.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "ai-generated-actor",
+        "generatedBy": "copilot-2026"
+    },
+    "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}
